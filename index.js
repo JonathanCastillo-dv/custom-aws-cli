@@ -1,3 +1,3 @@
-const {showMenuMajor} = require('./lib/utils/showMenuMajor');
+import { showMenuMajor } from './lib/utils/showMenuMajor.js';
 
 showMenuMajor();
