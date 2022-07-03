@@ -1,6 +1,6 @@
 {
   "name": "custom-aws-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Herramientas útiles para nuestros stacks de AWS.",
   "main": "app.js",
   "type": "module",
