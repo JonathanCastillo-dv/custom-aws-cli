@@ -11,7 +11,7 @@
     "AWS",
     "CLI"
   ],
-  "author": "Jonathan Castillo",
+  "author": "Jonathan Castillo y Mauro Barroso",
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
