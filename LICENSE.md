@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2022 Jonathan Castillo
+Copyright (c) 2022 Jonathan Castillo y Mauro Barroso
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
