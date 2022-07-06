@@ -3,6 +3,7 @@ import { optionMenuSelect } from './helpers/enquirer.js';
 import { s3Menu } from './service/s3/s3.js';
 import { dynamoDBMenu } from "./service/dynamodb/dynamodbMenu.js";
 import { sqsMenu } from './service/sqs/sqs.js';
+import { loginPersonalAccount, loginBusinessAccount } from "./service/login/index.js";
 
 /**
  * Método que recibe la opcion seleccionada y muestra opciones de ese servicio.
@@ -33,6 +34,28 @@ const selectServices = (opt) => {
     }
 };
 
+const selectAccount = (opt) =>{
+    console.log(opt)
+    switch (opt) {
+        case 'Login business' :
+            loginBusinessAccount()
+            break;
+        case 'Login personal account':
+            loginPersonalAccount()
+            break;
+        default:
+            break;
+    }
+}
+
+const loginMenu = async ()  =>{
+    console.clear()
+    banner("Seleccione un Servicio");
+    const menuList = ['Login business', 'Login personal account', 'Salir'];
+    const optionSelect = await optionMenuSelect(menuList)
+    await selectAccount(optionSelect);
+}
+
 /**
  * Metodo que nos permite mostrar el menú principal
  *
@@ -46,5 +69,5 @@ const showMenuMajor = async () => {
 };
 
 export {
-    showMenuMajor
+    showMenuMajor,loginMenu
 }

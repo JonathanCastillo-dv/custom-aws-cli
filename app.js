@@ -1,3 +1,4 @@
-import { showMenuMajor } from "./src/index.js";
+import { loginMenu } from "./src/index.js";
 
-showMenuMajor();
+
+loginMenu()

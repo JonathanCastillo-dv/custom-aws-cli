@@ -12,8 +12,8 @@ import { showMenuMajor } from '../../../index.js';
  */
 const selectBuckets = async ({ buckets, owner }) => {
     const resultBucket = await menuMultiSelect(buckets, `Hola ${owner} Seleccione los buckets a Eliminar`, {back:true});
-    console.log(resultBucket)
-    if (resultBucket == "Atras") {
+  
+    if (resultBucket.length === 0) {
         showMenuMajor()
     } else {
         console.log('Buckets Seleccionados:\n', resultBucket)

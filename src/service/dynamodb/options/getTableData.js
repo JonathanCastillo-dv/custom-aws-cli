@@ -3,6 +3,7 @@ import ora from 'ora';
 import { dynamoDBMenu } from '../dynamodbMenu.js';
 import { createDir, execCommand, existDir, writeFile } from '../../../helpers/functions.js';
 import { showMenuMajor } from "../../../index.js";
+import os from 'node:os'
 
 /**
  * Método que obtiene todos los datos de la tabla seleccionada, también se encarga de generar un directorio /dynamodb/fileTable donde almacena estos datos.
@@ -11,14 +12,13 @@ import { showMenuMajor } from "../../../index.js";
  */
 const generateFileDataTable = async (tableName) => {
     const dirName = 'src/service/dynamodb';
-    const pathTable = `${dirName}/fileTable`;
+    const pathTable = `${os.homedir()}/Downloads/fileTable`;
     const commandExec = `aws dynamodb scan --table-name ${tableName} --region us-east-1`;
     const { stdout } = await execCommand(commandExec);
     if (!existDir(pathTable)) {
         createDir(pathTable);
     }
-    const data = JSON.parse(stdout);
-    await writeFile(`${pathTable}/${tableName}.json`, JSON.stringify(data))
+    await writeFile(`${pathTable}/${tableName}.json`, stdout)
 
     console.log(`Datos generados en: ${pathTable}`.bgGreen)
 

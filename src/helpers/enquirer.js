@@ -1,5 +1,18 @@
 import pkg from 'enquirer';
-const { Confirm, MultiSelect, Select } = pkg;;
+const { Confirm, MultiSelect, Select, Input } = pkg;
+
+
+const promptFields = async ({
+    message,
+    initial,
+}) => {
+    const prompt = new Input({
+    message,
+    initial,
+    });
+
+    return await prompt.run()
+}
 
 /**
  *Función de confirmación donde recibe un mensaje y permite retornar true o false
@@ -20,8 +33,8 @@ const confirm = async (message) => {
  * @param {*} message
  * @returns  Retorna los elementos seleccionados
  */
-const menuMultiSelect = async (choices, message, {back} ={}) => {
-    if(back) {
+const menuMultiSelect = async (choices, message, { back } = {}) => {
+    if (back) {
         choices.unshift("Atras")
     }
     const select = new MultiSelect({
@@ -38,8 +51,8 @@ const menuMultiSelect = async (choices, message, {back} ={}) => {
  * @param {*} message
  * @returns  Retorna solo una opcion seleccionada
  */
-const optionMenuSelect = async (choices, message, {back} ={}) => {
-    if(back) {
+const optionMenuSelect = async (choices, message, { back } = {}) => {
+    if (back) {
         choices.unshift("Atras")
     }
     const option = new Select({
@@ -53,5 +66,6 @@ const optionMenuSelect = async (choices, message, {back} ={}) => {
 export {
     confirm,
     menuMultiSelect,
-    optionMenuSelect
+    optionMenuSelect,
+    promptFields
 }

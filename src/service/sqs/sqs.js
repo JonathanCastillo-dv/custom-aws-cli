@@ -28,10 +28,10 @@ const selectOptSqs = (opt) => {
  *Metodo que muestra las opciones del servicio S3
  */
 const sqsMenu = async () => {
-    const menuList = ["Atras","Purgar SQS", "Salir"];
+    const menuList = ["Purgar SQS", "Salir"];
     console.clear();
     banner("Seleccione una Opción");
-    const optionSelect = await optionMenuSelect(menuList)
+    const optionSelect = await optionMenuSelect(menuList,"",{back:true})
     selectOptSqs(optionSelect)
 }
 
