@@ -20,7 +20,10 @@ const confirm = async (message) => {
  * @param {*} message
  * @returns  Retorna los elementos seleccionados
  */
-const menuMultiSelect = async (choices, message) => {
+const menuMultiSelect = async (choices, message, {back} ={}) => {
+    if(back) {
+        choices.unshift("Atras")
+    }
     const select = new MultiSelect({
         message,
         limit: 7,
@@ -35,7 +38,10 @@ const menuMultiSelect = async (choices, message) => {
  * @param {*} message
  * @returns  Retorna solo una opcion seleccionada
  */
-const optionMenuSelect = async (choices, message) => {
+const optionMenuSelect = async (choices, message, {back} ={}) => {
+    if(back) {
+        choices.unshift("Atras")
+    }
     const option = new Select({
         type: "select",
         message,

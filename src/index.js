@@ -10,6 +10,9 @@ import { sqsMenu } from './service/sqs/sqs.js';
  */
 const selectServices = (opt) => {
     switch (opt.toLowerCase()) {
+        case "atras":
+            showMenuMajor()
+        break;
         case "s3":
             s3Menu();
             break;

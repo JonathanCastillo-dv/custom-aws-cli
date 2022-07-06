@@ -42,6 +42,7 @@ const purgarSqs = async () => {
     const getSqsList = await sqsList();
     spinner.stop();
     const sqsSelect = await optionMenuSelect(getSqsList, `Hola Seleccione la SQS a Purgar`);
+    
     console.log(`La SQS Seleccionada es: ${sqsSelect.green}`)
     const iscorrect = await confirm('La SQS seleccionada es correcta?');
     if (iscorrect) {

@@ -1,6 +1,7 @@
 import { banner } from '../../helpers/functions.js';
 import { optionMenuSelect } from '../../helpers/enquirer.js';
 import { purgarSqs } from './options/purgarSqs.js';
+import { showMenuMajor } from '../../index.js';
 
 /**
  *
@@ -8,6 +9,9 @@ import { purgarSqs } from './options/purgarSqs.js';
  */
 const selectOptSqs = (opt) => {
     switch (opt.toLowerCase()) {
+        case "atras":
+            showMenuMajor()
+            break;
         case "purgar sqs":
             purgarSqs();
             break;
@@ -24,7 +28,7 @@ const selectOptSqs = (opt) => {
  *Metodo que muestra las opciones del servicio S3
  */
 const sqsMenu = async () => {
-    const menuList = ["Purgar SQS", "Salir"];
+    const menuList = ["Atras","Purgar SQS", "Salir"];
     console.clear();
     banner("Seleccione una Opción");
     const optionSelect = await optionMenuSelect(menuList)
