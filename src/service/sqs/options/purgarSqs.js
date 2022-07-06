@@ -2,6 +2,7 @@ import { confirm, optionMenuSelect } from "../../../helpers/enquirer.js";
 import { execCommand } from "../../../helpers/functions.js";
 import ora from 'ora';
 import { sqsMenu } from "../sqs.js";
+import { showMenuMajor } from "../../../index.js";
 
 /**
  *Metodo encargado de Purgar la sqs
@@ -41,20 +42,25 @@ const purgarSqs = async () => {
     spinner.color = 'red'
     const getSqsList = await sqsList();
     spinner.stop();
-    const sqsSelect = await optionMenuSelect(getSqsList, `Hola Seleccione la SQS a Purgar`);
-    console.log(`La SQS Seleccionada es: ${sqsSelect.green}`)
-    const iscorrect = await confirm('La SQS seleccionada es correcta?');
-    if (iscorrect) {
-        const urlSqs = sqsSelect.split('#')[0].trim();
-        cleanSqs(urlSqs);
-        setTimeout(() => {
-            sqsMenu();
-        },1500);
+    const sqsSelect = await optionMenuSelect(getSqsList, `Hola Seleccione la SQS a Purgar`, { back: true });
+    if (sqsSelect === "Atras") {
+        showMenuMajor()
     } else {
-        sqsMenu()
+        console.log(`La SQS Seleccionada es: ${sqsSelect.green}`)
+        const iscorrect = await confirm('La SQS seleccionada es correcta?');
+        if (iscorrect) {
+            const urlSqs = sqsSelect.split('#')[0].trim();
+            cleanSqs(urlSqs);
+            setTimeout(() => {
+                sqsMenu();
+            }, 1500);
+        } else {
+            sqsMenu()
+        }
     }
+
 }
 
-export{
+export {
     purgarSqs
 }

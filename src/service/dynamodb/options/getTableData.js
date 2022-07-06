@@ -2,6 +2,8 @@ import { confirm, optionMenuSelect } from "../../../helpers/enquirer.js";
 import ora from 'ora';
 import { dynamoDBMenu } from '../dynamodbMenu.js';
 import { createDir, execCommand, existDir, writeFile } from '../../../helpers/functions.js';
+import { showMenuMajor } from "../../../index.js";
+import os from 'node:os'
 
 /**
  * Método que obtiene todos los datos de la tabla seleccionada, también se encarga de generar un directorio /dynamodb/fileTable donde almacena estos datos.
@@ -10,14 +12,13 @@ import { createDir, execCommand, existDir, writeFile } from '../../../helpers/fu
  */
 const generateFileDataTable = async (tableName) => {
     const dirName = 'src/service/dynamodb';
-    const pathTable = `${dirName}/fileTable`;
+    const pathTable = `${os.homedir()}/Downloads/fileTable`;
     const commandExec = `aws dynamodb scan --table-name ${tableName} --region us-east-1`;
     const { stdout } = await execCommand(commandExec);
-    if(!existDir(pathTable)){
+    if (!existDir(pathTable)) {
         createDir(pathTable);
     }
-    const data = JSON.parse(stdout);
-    await writeFile(`${pathTable}/${tableName}.json`,JSON.stringify(data))
+    await writeFile(`${pathTable}/${tableName}.json`, stdout)
 
     console.log(`Datos generados en: ${pathTable}`.bgGreen)
 
@@ -50,17 +51,26 @@ const getTableData = async () => {
     if (tableList) {
         spinner.stop();
     }
-    const tableSelect = await optionMenuSelect(tableList, `Hola Seleccione la Tabla a usar`);
-    console.log(`Tabla seleccionada: ${tableSelect.green}`)
-    const iscorrect = await confirm('La tabla seleccionada es correcta?');
-    if (iscorrect) {
-        generateFileDataTable(tableSelect)
+
+    const tableSelect = await optionMenuSelect(tableList, `Hola Seleccione la Tabla a usar`, {back:true});
+
+    if (tableSelect == "Atras") {
+        showMenuMajor()
     } else {
-        dynamoDBMenu()
+        console.log(`Tabla seleccionada: ${tableSelect.green}`)
+        const iscorrect = await confirm('La tabla seleccionada es correcta?');
+        if (iscorrect) {
+            generateFileDataTable(tableSelect)
+        } else {
+            dynamoDBMenu()
+        }
     }
+
+
+
 }
 
-export{
+export {
     getTableData
 }
 

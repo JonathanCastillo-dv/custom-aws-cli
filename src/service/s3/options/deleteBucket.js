@@ -3,6 +3,7 @@ import colors from 'colors';
 import { confirm, menuMultiSelect } from '../../../helpers/enquirer.js';
 import { s3Menu } from '../s3.js';
 import { execCommand } from '../../../helpers/functions.js';
+import { showMenuMajor } from '../../../index.js';
 
 /**
  *Funcion que recibe como parametros buckets de aws y permite seleccionarlos.
@@ -10,16 +11,19 @@ import { execCommand } from '../../../helpers/functions.js';
  * @returns {Array} Retorna un array de buckets seleccionados.
  */
 const selectBuckets = async ({ buckets, owner }) => {
+    const resultBucket = await menuMultiSelect(buckets, `Hola ${owner} Seleccione los buckets a Eliminar`, {back:true});
+  
+    if (resultBucket.length === 0) {
+        showMenuMajor()
+    } else {
+        console.log('Buckets Seleccionados:\n', resultBucket)
 
-    const resultBucket = await menuMultiSelect(buckets, `Hola ${owner} Seleccione los buckets a Eliminar`);
+        const iscorrect = await confirm('Los Buckets seleccionados son correctos?');
 
-    console.log('Buckets Seleccionados:\n', resultBucket)
+        if (iscorrect) return resultBucket
 
-    const iscorrect = await confirm('Los Buckets seleccionados son correctos?');
-
-    if (iscorrect) return resultBucket
-
-    s3Menu();
+        s3Menu();
+    }
 }
 
 /**
@@ -30,12 +34,11 @@ const deleteBucket = async () => {
     spinner.color = 'red'
 
     const dataBucket = await getBucketAndOwner();
-
     if (dataBucket) {
         spinner.stop();
     }
-
     const bucketSelect = await selectBuckets(dataBucket);
+
     if (bucketSelect) {
         bucketSelect.map(async (bucketName) => {
             const commandExec = `aws s3 rb s3://${bucketName} --force`;
@@ -49,6 +52,7 @@ const deleteBucket = async () => {
             s3Menu();
         }, 2000);
     }
+
 }
 
 /**

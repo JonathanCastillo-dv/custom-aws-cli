@@ -1,5 +1,6 @@
 import { optionMenuSelect } from "../../helpers/enquirer.js";
 import { banner } from "../../helpers/functions.js";
+import { showMenuMajor } from "../../index.js";
 import { getTableData } from "./options/getTableData.js";
 
 /**
@@ -8,6 +9,9 @@ import { getTableData } from "./options/getTableData.js";
  */
 const selectOptDynamodb = (opt) => {
     switch (opt.toLowerCase()) {
+        case 'atras':
+            showMenuMajor();
+            break;
         case "obtener datos de tabla":
             getTableData();
             break;
@@ -26,7 +30,7 @@ const dynamoDBMenu = async () => {
     const menuList = ["Obtener datos de tabla", "Salir"];
     console.clear();
     banner("Seleccione una Opción");
-    const optionSelect = await optionMenuSelect(menuList)
+    const optionSelect = await optionMenuSelect(menuList,"",{back:true})
     selectOptDynamodb(optionSelect)
 }
 

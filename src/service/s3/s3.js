@@ -1,6 +1,7 @@
 import { banner } from '../../helpers/functions.js';
-import {optionMenuSelect } from '../../helpers/enquirer.js'
+import { optionMenuSelect } from '../../helpers/enquirer.js'
 import { deleteBucket } from './options/deleteBucket.js';
+import { showMenuMajor } from '../../index.js';
 
 /**
  *
@@ -8,6 +9,9 @@ import { deleteBucket } from './options/deleteBucket.js';
  */
 const selectOptS3 = (opt) => {
     switch (opt.toLowerCase()) {
+        case "atras":
+            showMenuMajor()
+            break;
         case "delete buckets":
             deleteBucket()
             break;
@@ -26,8 +30,13 @@ const s3Menu = async () => {
     const menuList = ["Delete Buckets", "Salir"];
     console.clear();
     banner("Seleccione una Opción");
-    const optionSelect = await optionMenuSelect(menuList)
-    selectOptS3(optionSelect)
+    const optionSelect = await optionMenuSelect(menuList,"", {back: true })
+    if (optionSelect == "Atras") {
+        showMenuMajor()
+    } else {
+        selectOptS3(optionSelect)
+
+    }
 }
 
 export {
